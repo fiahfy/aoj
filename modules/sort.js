@@ -59,9 +59,66 @@ function shellSort(array, g) {
     }
 }
 
+function mergeSort(array, left, right) {
+    if (left + 1 < right) {
+        var mid = Math.floor((left + right) / 2);
+        mergeSort(array, left, mid);
+        mergeSort(array, mid, right);
+        mergeSortSub(array, left, mid, right);
+    }
+
+    function mergeSortSub(array, left, mid, right) {
+        var n1 = mid - left;
+        var n2 = right - mid;
+        var leftArray = [];
+        var rightArray = [];
+        for (var i = 0; i < n1; i++) {
+            leftArray.push(array[left + i]);
+        }
+        for (var i = 0; i < n2; i++) {
+            rightArray.push(array[mid + i]);
+        }
+        leftArray.push(Infinity);
+        rightArray.push(Infinity);
+        var i = j = 0;
+        for (var k = left; k < right; k++) {
+            if (leftArray[i] <= rightArray[j]) {
+                array[k] = leftArray[i];
+                i++;
+            } else {
+                array[k] = rightArray[j];
+                j++;
+            }
+        }
+    }
+}
+
+function coutingSort(array, k) {
+    var counts = [];
+    for (var i = 0; i <= k; i++) {
+        counts[i] = 0;
+    }
+    for (var i = 0; i < array.length; i++) {
+        counts[array[i]]++;
+    }
+    for (var i = 1; i <= k; i++) {
+        counts[i] = counts[i] + counts[i - 1];
+    }
+    var results = [];
+    for (var i = array.length - 1; i >= 0; i--) {
+        results[counts[array[i]]] = array[i];
+        counts[array[i]]--;
+    }
+    for (var i = 1; i < array.length; i++) {
+        array[i] = results[i];
+    }
+}
+
 module.exports = {
     insertionSort: insertionSort,
     bubbleSort: bubbleSort,
     selectionSort: selectionSort,
-    shellSort: shellSort
+    shellSort: shellSort,
+    mergeSort: mergeSort,
+    countingSort: countingSort
 };
