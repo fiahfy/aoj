@@ -1,35 +1,18 @@
-function greatestCommonDevisor(x, y) {
-    return Math.max.apply(null, commonDevisors(x, y));
+function greatestCommonDivisor(a, b) {
+    if (b > a) {
+        b = [a, a = b][0];
+    }
+    if (b == 0) {
+        return a;
+    }
+    return greatestCommonDivisor(a % b, b);
 }
 
-function commonDevisors(x, y) {
-    if (x > y) {
-        x = x % y;
-    } else if (x < y) {
-        var tmp = y;
-        y = x;
-        x = tmp % x;
-    }
-    var array = [];
-    for (var i = 1; i <= x; i++) {
-        if (x % i === 0 && y % i === 0) {
-            array.push(i);
-        }
-    }
-    return array;
+function leastCommonMultiple(a, b) {
+    return a * b / greatestCommonDivisor(a, b);
 }
 
-function divisors(x) {
-    var array = [];
-    for (var i = 1; i <= x / 2; i++) {
-        if (x % i === 0) {
-            array.push(i);
-        }
-    }
-    return array;
-}
-
-function primeNumbersIn(x) {
+function primeNumbersInForEratosthenes(x) {
     var a = {};
     for (var i = 2; i <= x; i++) {
         a[i] = 1;
@@ -52,6 +35,16 @@ function primeNumbersIn(x) {
         n = m;
     } while (n <= Math.sqrt(x))
     return Object.keys(a).map(Number);
+}
+
+function primeNumbersIn(x) {
+    var array = [];
+    for (var i = 2; i <= x; i++) {
+        if (isPrimeNumber(i)) {
+            array.push(i);
+        }
+    }
+    return array
 }
 
 function isPrimeNumber(x) {
